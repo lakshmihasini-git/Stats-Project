@@ -1,788 +1,762 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Math Behind the Magic ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-<style>
-:root{
-  --pink:#e91e8c; --pink2:#ff6ec7; --ppale:#ffd6f0;
-  --purple:#9b27b0; --purpale:#f3e5f5;
-  --bg:#fdf0f8; --text:#2d1b40; --muted:#8a6a9a;
-  --shadow:0 8px 32px rgba(155,39,176,0.13);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;overflow-x:hidden;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Math Behind the Magic ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --pink: #e91e8c; --pink2: #ff6ec7; --ppale: #ffd6f0;
+      --purple: #9b27b0; --purpale: #f3e5f5;
+      --bg: #fdf0f8; --text: #2d1b40; --muted: #8a6a9a;
+      --shadow: 0 8px 32px rgba(155, 39, 176, 0.13);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
 
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  background:linear-gradient(145deg,#4a0080,#9b27b0 40%,#e91e8c 75%,#ff6ec7);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:3rem 2rem;position:relative;overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 20% 20%,rgba(255,255,255,0.07),transparent 40%),
-             radial-gradient(circle at 80% 80%,rgba(255,255,255,0.05),transparent 40%);
-}
-.float-wrap span{
-  position:absolute;font-size:2.2rem;opacity:0.15;pointer-events:none;
-  animation:floatup linear infinite;
-}
-@keyframes floatup{
-  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
-  10%{opacity:.15} 90%{opacity:.15}
-  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
-}
-.hero-pill{
-  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);
-  color:#fff;padding:.4rem 1.2rem;border-radius:30px;
-  font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:1.5rem;
-}
-.hero h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:1rem;text-shadow:0 4px 20px rgba(0,0,0,.2);}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#fff176,#ffe0b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{color:rgba(255,255,255,.85);font-size:1.05rem;font-weight:600;max-width:480px;line-height:1.6;margin-bottom:2.5rem;}
-.team-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:2.5rem;}
-.tpill{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.3rem .9rem;border-radius:20px;font-size:.78rem;font-weight:700;}
-.scroll-cta{color:rgba(255,255,255,.75);font-size:.82rem;font-weight:700;letter-spacing:.1em;display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;animation:bobble 2s 1s infinite;}
-@keyframes bobble{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #4a0080, #9b27b0 40%, #e91e8c 75%, #ff6ec7);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.07), transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05), transparent 40%);
+    }
+    .float-wrap span {
+      position: absolute; font-size: 2.2rem; opacity: 0.15; pointer-events: none;
+      animation: floatup linear infinite;
+    }
+    @keyframes floatup {
+      0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10% { opacity: .15; } 90% { opacity: .15; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+    .hero-pill {
+      background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .35);
+      color: #fff; padding: .4rem 1.2rem; border-radius: 30px;
+      font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 7vw, 5rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0, 0, 0, .2); }
+    .hero h1 em { font-style: normal; background: linear-gradient(90deg, #fff176, #ffe0b2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { color: rgba(255, 255, 255, .85); font-size: 1.05rem; font-weight: 600; max-width: 480px; line-height: 1.6; margin-bottom: 2.5rem; }
+    .team-row { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-bottom: 2.5rem; }
+    .tpill { background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .3); color: #fff; padding: .3rem .9rem; border-radius: 20px; font-size: .78rem; font-weight: 700; }
+    .scroll-cta { color: rgba(255, 255, 255, .75); font-size: .82rem; font-weight: 700; letter-spacing: .1em; display: flex; flex-direction: column; align-items: center; gap: .4rem; cursor: pointer; animation: bobble 2s 1s infinite; }
+    @keyframes bobble { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:200;background:#fff;
-  border-bottom:3px solid var(--ppale);padding:.7rem 2rem;
-  display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;
-  box-shadow:0 4px 20px rgba(233,30,140,.08);
-}
-.nbtn{
-  background:none;border:2px solid transparent;color:var(--muted);
-  padding:.4rem 1.1rem;border-radius:30px;font-family:'Nunito',sans-serif;
-  font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;
-}
-.nbtn:hover{border-color:var(--ppale);color:var(--purple);}
-.nbtn.on{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-color:transparent;}
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200; background: #fff;
+      border-bottom: 3px solid var(--ppale); padding: .7rem 2rem;
+      display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap;
+      box-shadow: 0 4px 20px rgba(233, 30, 140, .08);
+    }
+    .nbtn {
+      background: none; border: 2px solid transparent; color: var(--muted);
+      padding: .4rem 1.1rem; border-radius: 30px; font-family: 'Nunito', sans-serif;
+      font-size: .85rem; font-weight: 700; cursor: pointer; transition: all .2s;
+    }
+    .nbtn:hover { border-color: var(--ppale); color: var(--purple); }
+    .nbtn.on { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; border-color: transparent; }
 
-/* ── SECTIONS ── */
-.sec{padding:4rem 2rem;max-width:1100px;margin:0 auto;}
-.tag{display:inline-block;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;padding:.3rem 1rem;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem;}
-h2.title{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;margin-bottom:.8rem;line-height:1.2;}
-h2.title span{background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.desc{color:var(--muted);max-width:560px;line-height:1.7;font-size:1rem;font-weight:600;margin-bottom:2.5rem;}
+    /* ── SECTIONS ── */
+    .sec { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .tag { display: inline-block; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; padding: .3rem 1rem; border-radius: 20px; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .8rem; }
+    h2.title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; margin-bottom: .8rem; line-height: 1.2; }
+    h2.title span { background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .desc { color: var(--muted); max-width: 560px; line-height: 1.7; font-size: 1rem; font-weight: 600; margin-bottom: 2.5rem; }
 
-/* ── COUNTERS ── */
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:3rem;}
-.ccard{background:#fff;border-radius:22px;padding:1.8rem 1.2rem;box-shadow:var(--shadow);text-align:center;border-top:5px solid var(--cc,var(--pink));transition:transform .25s;}
-.ccard:hover{transform:translateY(-5px) rotate(-.5deg);}
-.cemi{font-size:2rem;margin-bottom:.4rem;}
-.cnum{font-size:2.3rem;font-weight:900;color:var(--cc,var(--pink));line-height:1;margin-bottom:.2rem;}
-.clbl{font-size:.8rem;color:var(--muted);font-weight:700;}
-.capp{font-size:.7rem;color:var(--cc,var(--pink));font-weight:800;margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em;}
+    /* ── COUNTERS ── */
+    .cgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+    .ccard { background: #fff; border-radius: 22px; padding: 1.8rem 1.2rem; box-shadow: var(--shadow); text-align: center; border-top: 5px solid var(--cc, var(--pink)); transition: transform .25s; }
+    .ccard:hover { transform: translateY(-5px) rotate(-.5deg); }
+    .cemi { font-size: 2rem; margin-bottom: .4rem; }
+    .cnum { font-size: 2.3rem; font-weight: 900; color: var(--cc, var(--pink)); line-height: 1; margin-bottom: .2rem; }
+    .clbl { font-size: .8rem; color: var(--muted); font-weight: 700; }
+    .capp { font-size: .7rem; color: var(--cc, var(--pink)); font-weight: 800; margin-top: .3rem; text-transform: uppercase; letter-spacing: .05em; }
 
-/* ── CONCEPT CHIPS ── */
-.chips{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem;}
-.chip{
-  background:#fff;border:2px solid var(--ppale);border-radius:14px;padding:.9rem 1.1rem;
-  display:flex;align-items:center;gap:.7rem;flex:1;min-width:145px;
-  transition:all .2s;cursor:default;
-}
-.chip:hover{border-color:var(--pink);background:var(--ppale);transform:translateY(-2px);}
-.chip-ico{font-size:1.7rem;}
-.chip-name{font-size:.88rem;font-weight:800;}
-.chip-sub{font-size:.7rem;color:var(--muted);font-weight:600;}
+    /* ── CONCEPT CHIPS ── */
+    .chips { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1rem; }
+    .chip { background: #fff; border: 2px solid var(--ppale); border-radius: 14px; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .7rem; flex: 1; min-width: 145px; transition: all .2s; cursor: default; }
+    .chip:hover { border-color: var(--pink); background: var(--ppale); transform: translateY(-2px); }
+    .chip-ico { font-size: 1.7rem; }
+    .chip-name { font-size: .88rem; font-weight: 800; }
+    .chip-sub { font-size: .7rem; color: var(--muted); font-weight: 600; }
 
-/* ── WAVY ── */
-.wavy{width:100%;overflow:hidden;line-height:0;}
-.wavy svg{display:block;width:100%;}
+    /* ── WAVY ── */
+    .wavy { width: 100%; overflow: hidden; line-height: 0; }
+    .wavy svg { display: block; width: 100%; }
 
-/* ── APP TABS ── */
-.tab-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.8rem;}
-.atab{
-  background:#fff;border:2px solid var(--ppale);padding:.55rem 1.3rem;border-radius:30px;
-  cursor:pointer;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:800;
-  color:var(--muted);transition:all .2s;
-}
-.atab:hover{border-color:var(--pink);color:var(--pink);}
-.atab.on{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-color:transparent;box-shadow:0 4px 16px rgba(233,30,140,.3);}
+    /* ── APP TABS ── */
+    .tab-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+    .atab { background: #fff; border: 2px solid var(--ppale); padding: .55rem 1.3rem; border-radius: 30px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: .88rem; font-weight: 800; color: var(--muted); transition: all .2s; }
+    .atab:hover { border-color: var(--pink); color: var(--pink); }
+    .atab.on { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(233, 30, 140, .3); }
 
-/* ── APP PANELS ── */
-.apanel{display:none;}
-.apanel.on{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
-@media(max-width:640px){.apanel.on{grid-template-columns:1fr;}}
-.ainfo{background:#fff;border-radius:22px;padding:2rem;box-shadow:var(--shadow);}
-.ahead{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;}
-.alogo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;}
-.atitle{font-size:1.3rem;font-weight:900;}
-.abadge{display:inline-block;padding:.25rem .8rem;border-radius:20px;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem;}
-.apoints{list-style:none;}
-.apoints li{padding:.6rem 0;border-bottom:1px solid var(--ppale);font-size:.9rem;font-weight:600;line-height:1.5;display:flex;gap:.6rem;}
-.apoints li:last-child{border-bottom:none;}
-.apoints li::before{content:'✦';color:var(--pink);font-size:.65rem;margin-top:.25rem;flex-shrink:0;}
-.econbox{background:linear-gradient(135deg,var(--purpale),var(--ppale));border-radius:14px;padding:1.1rem 1.3rem;margin-top:1.1rem;border-left:4px solid var(--purple);}
-.econbox h4{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--purple);margin-bottom:.4rem;}
-.econbox p{font-size:.87rem;font-weight:600;color:var(--text);line-height:1.6;}
-.achartbox{background:#fff;border-radius:22px;padding:1.6rem;box-shadow:var(--shadow);}
-.achartbox h3{font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:1rem;}
-canvas{max-height:270px;}
+    /* ── APP PANELS ── */
+    .apanel { display: none; }
+    .apanel.on { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    @media(max-width:640px) { .apanel.on { grid-template-columns: 1fr; } }
+    .ainfo { background: #fff; border-radius: 22px; padding: 2rem; box-shadow: var(--shadow); }
+    .ahead { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+    .alogo { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; }
+    .atitle { font-size: 1.3rem; font-weight: 900; }
+    .abadge { display: inline-block; padding: .25rem .8rem; border-radius: 20px; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; margin-bottom: .9rem; }
+    .apoints { list-style: none; }
+    .apoints li { padding: .6rem 0; border-bottom: 1px solid var(--ppale); font-size: .9rem; font-weight: 600; line-height: 1.5; display: flex; gap: .6rem; }
+    .apoints li:last-child { border-bottom: none; }
+    .apoints li::before { content: '✦'; color: var(--pink); font-size: .65rem; margin-top: .25rem; flex-shrink: 0; }
+    .econbox { background: linear-gradient(135deg, var(--purpale), var(--ppale)); border-radius: 14px; padding: 1.1rem 1.3rem; margin-top: 1.1rem; border-left: 4px solid var(--purple); }
+    .econbox h4 { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--purple); margin-bottom: .4rem; }
+    .econbox p { font-size: .87rem; font-weight: 600; color: var(--text); line-height: 1.6; }
+    .achartbox { background: #fff; border-radius: 22px; padding: 1.6rem; box-shadow: var(--shadow); }
+    .achartbox h3 { font-size: .8rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 1rem; }
+    canvas { max-height: 270px; }
 
-/* ── DEMO TABS ── */
-.dtab-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.8rem;}
-.dtab{
-  background:#fff;border:2px solid var(--ppale);padding:.5rem 1.2rem;border-radius:20px;
-  cursor:pointer;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;
-  color:var(--muted);transition:all .2s;
-}
-.dtab.on{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border-color:transparent;}
-.dpanel{display:none;}
-.dpanel.on{display:block;}
-.dbox{background:#fff;border-radius:22px;padding:2rem;box-shadow:var(--shadow);}
-.dbox h3{font-size:1rem;font-weight:800;margin-bottom:.3rem;}
-.dsub{font-size:.84rem;color:var(--muted);font-weight:600;margin-bottom:1.5rem;}
+    /* ── DEMO TABS ── */
+    .dtab-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+    .dtab { background: #fff; border: 2px solid var(--ppale); padding: .5rem 1.2rem; border-radius: 20px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: .85rem; font-weight: 800; color: var(--muted); transition: all .2s; }
+    .dtab.on { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; border-color: transparent; }
+    .dpanel { display: none; }
+    .dpanel.on { display: block; }
+    .dbox { background: #fff; border-radius: 22px; padding: 2rem; box-shadow: var(--shadow); }
+    .dbox h3 { font-size: 1rem; font-weight: 800; margin-bottom: .3rem; }
+    .dsub { font-size: .84rem; color: var(--muted); font-weight: 600; margin-bottom: 1.5rem; }
 
-/* sliders */
-.srow{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;flex-wrap:wrap;}
-.srow label{font-weight:800;font-size:.87rem;min-width:185px;}
-.srow input[type=range]{flex:1;min-width:100px;accent-color:var(--pink);}
-.sval{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;font-weight:800;font-size:.8rem;padding:.22rem .65rem;border-radius:10px;min-width:52px;text-align:center;}
+    /* sliders */
+    .srow { display: flex; align-items: center; gap: .9rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .srow label { font-weight: 800; font-size: .87rem; min-width: 185px; }
+    .srow input[type=range] { flex: 1; min-width: 100px; accent-color: var(--pink); }
+    .sval { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; font-weight: 800; font-size: .8rem; padding: .22rem .65rem; border-radius: 10px; min-width: 52px; text-align: center; }
 
-/* regression output */
-.pred{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border-radius:16px;padding:1.4rem 2rem;text-align:center;margin-top:.5rem;}
-.pred-lbl{font-size:.78rem;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem;}
-.pred-val{font-size:2.8rem;font-weight:900;}
-.pred-sub{font-size:.8rem;opacity:.85;margin-top:.3rem;font-weight:600;}
+    /* regression output */
+    .pred { background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; border-radius: 16px; padding: 1.4rem 2rem; text-align: center; margin-top: .5rem; }
+    .pred-lbl { font-size: .78rem; font-weight: 700; opacity: .85; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .3rem; }
+    .pred-val { font-size: 2.8rem; font-weight: 900; }
+    .pred-sub { font-size: .8rem; opacity: .85; margin-top: .3rem; font-weight: 600; }
 
-/* clustering */
-.csliders{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-bottom:1.3rem;}
-.clusters{display:flex;gap:.7rem;flex-wrap:wrap;}
-.cl{flex:1;min-width:115px;background:var(--ppale);border:3px solid transparent;border-radius:14px;padding:.9rem .7rem;text-align:center;transition:all .3s;}
-.cl.match{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;transform:scale(1.06);box-shadow:0 8px 24px rgba(233,30,140,.3);}
-.cl .ci{font-size:1.7rem;margin-bottom:.25rem;}
-.cl .cn{font-size:.83rem;font-weight:800;}
-.cl .cd{font-size:.7rem;font-weight:600;opacity:.75;margin-top:.15rem;}
+    /* clustering */
+    .csliders { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; margin-bottom: 1.3rem; }
+    .clusters { display: flex; gap: .7rem; flex-wrap: wrap; }
+    .cl { flex: 1; min-width: 115px; background: var(--ppale); border: 3px solid transparent; border-radius: 14px; padding: .9rem .7rem; text-align: center; transition: all .3s; }
+    .cl.match { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; transform: scale(1.06); box-shadow: 0 8px 24px rgba(233, 30, 140, .3); }
+    .cl .ci { font-size: 1.7rem; margin-bottom: .25rem; }
+    .cl .cn { font-size: .83rem; font-weight: 800; }
+    .cl .cd { font-size: .7rem; font-weight: 600; opacity: .75; margin-top: .15rem; }
 
-/* probability */
-.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.2rem;}
-.titem{border:3px solid var(--ppale);border-radius:14px;padding:.9rem .7rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg);}
-.titem:hover{border-color:var(--pink);transform:scale(1.03);}
-.titem.win{border-color:var(--pink);background:linear-gradient(135deg,var(--ppale),var(--purpale));}
-.temi{font-size:1.8rem;margin-bottom:.25rem;}
-.tname{font-size:.7rem;font-weight:800;margin-bottom:.35rem;}
-.tbar-wrap{background:var(--ppale);border-radius:5px;height:7px;overflow:hidden;}
-.tbar{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--pink),var(--purple));transition:width .5s ease;}
-.tpct{font-size:.72rem;font-weight:800;color:var(--pink);margin-top:.25rem;}
-.pinfo{background:var(--purpale);border-radius:12px;padding:.9rem 1.2rem;font-size:.87rem;font-weight:600;color:var(--purple);line-height:1.6;}
+    /* probability */
+    .tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-bottom: 1.2rem; }
+    .titem { border: 3px solid var(--ppale); border-radius: 14px; padding: .9rem .7rem; text-align: center; cursor: pointer; transition: all .2s; background: var(--bg); }
+    .titem:hover { border-color: var(--pink); transform: scale(1.03); }
+    .titem.win { border-color: var(--pink); background: linear-gradient(135deg, var(--ppale), var(--purpale)); }
+    .temi { font-size: 1.8rem; margin-bottom: .25rem; }
+    .tname { font-size: .7rem; font-weight: 800; margin-bottom: .35rem; }
+    .tbar-wrap { background: var(--ppale); border-radius: 5px; height: 7px; overflow: hidden; }
+    .tbar { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--pink), var(--purple)); transition: width .5s ease; }
+    .tpct { font-size: .72rem; font-weight: 800; color: var(--pink); margin-top: .25rem; }
+    .pinfo { background: var(--purpale); border-radius: 12px; padding: .9rem 1.2rem; font-size: .87rem; font-weight: 600; color: var(--purple); line-height: 1.6; }
 
-/* ── QUIZ ── */
-.qbox{background:#fff;border-radius:22px;padding:2.5rem;box-shadow:var(--shadow);max-width:680px;}
-.qbar{display:flex;gap:5px;margin-bottom:1.8rem;}
-.qb{flex:1;height:6px;border-radius:3px;background:var(--ppale);transition:background .4s;}
-.qb.done{background:var(--purple);} .qb.cur{background:var(--pink);}
-.qcount{font-size:.75rem;font-weight:800;color:var(--muted);margin-bottom:.4rem;letter-spacing:.08em;}
-.qq{font-size:1.2rem;font-weight:900;margin-bottom:.4rem;line-height:1.4;}
-.qhint{font-size:.87rem;font-weight:600;color:var(--muted);margin-bottom:1.7rem;}
-.qopts{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.3rem;}
-.qopt{background:var(--bg);border:2.5px solid var(--ppale);border-radius:13px;padding:.95rem;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:var(--text);transition:all .2s;line-height:1.4;}
-.qopt:hover:not([disabled]){border-color:var(--pink);background:var(--ppale);}
-.qopt.ok{border-color:#00c896!important;background:#e6fff6!important;color:#007a54!important;}
-.qopt.bad{border-color:#ff5252!important;background:#fff0f0!important;color:#c00!important;}
-.qfb{border-radius:13px;padding:.95rem 1.2rem;font-size:.88rem;font-weight:700;margin-bottom:1.3rem;line-height:1.6;display:none;}
-.qfb.show{display:block;} .qfb.ok{background:#e6fff6;color:#007a54;border:2px solid #00c896;} .qfb.bad{background:#fff0f0;color:#c00;border:2px solid #ff5252;}
-.qnxt{display:none;background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border:none;padding:.82rem 2rem;border-radius:30px;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(233,30,140,.3);transition:transform .15s;}
-.qnxt:hover{transform:translateY(-2px);} .qnxt.show{display:inline-block;}
-.scorescreen{display:none;text-align:center;padding:1rem 0;}
-.scorescreen.show{display:block;}
-.scorebig{font-size:5rem;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
-.scoreemi{font-size:2.8rem;margin:.5rem 0;}
-.scoremsg{font-size:1rem;font-weight:700;color:var(--muted);margin-bottom:1.8rem;}
-.restartbtn{background:#fff;border:2.5px solid var(--pink);color:var(--pink);padding:.7rem 1.8rem;border-radius:30px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:800;transition:all .2s;}
-.restartbtn:hover{background:var(--pink);color:#fff;}
+    /* ── QUIZ ── */
+    .qbox { background: #fff; border-radius: 22px; padding: 2.5rem; box-shadow: var(--shadow); max-width: 680px; }
+    .qbar { display: flex; gap: 5px; margin-bottom: 1.8rem; }
+    .qb { flex: 1; height: 6px; border-radius: 3px; background: var(--ppale); transition: background .4s; }
+    .qb.done { background: var(--purple); } .qb.cur { background: var(--pink); }
+    .qcount { font-size: .75rem; font-weight: 800; color: var(--muted); margin-bottom: .4rem; letter-spacing: .08em; }
+    .qq { font-size: 1.2rem; font-weight: 900; margin-bottom: .4rem; line-height: 1.4; }
+    .qhint { font-size: .87rem; font-weight: 600; color: var(--muted); margin-bottom: 1.7rem; }
+    .qopts { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: 1.3rem; }
+    .qopt { background: var(--bg); border: 2.5px solid var(--ppale); border-radius: 13px; padding: .95rem; cursor: pointer; text-align: left; font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 700; color: var(--text); transition: all .2s; line-height: 1.4; }
+    .qopt:hover:not([disabled]) { border-color: var(--pink); background: var(--ppale); }
+    .qopt.ok { border-color: #00c896!important; background: #e6fff6!important; color: #007a54!important; }
+    .qopt.bad { border-color: #ff5252!important; background: #fff0f0!important; color: #c00!important; }
+    .qfb { border-radius: 13px; padding: .95rem 1.2rem; font-size: .88rem; font-weight: 700; margin-bottom: 1.3rem; line-height: 1.6; display: none; }
+    .qfb.show { display: block; } .qfb.ok { background: #e6fff6; color: #007a54; border: 2px solid #00c896; } .qfb.bad { background: #fff0f0; color: #c00; border: 2px solid #ff5252; }
+    .qnxt { display: none; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; border: none; padding: .82rem 2rem; border-radius: 30px; font-family: 'Nunito', sans-serif; font-size: .92rem; font-weight: 800; cursor: pointer; box-shadow: 0 6px 20px rgba(233, 30, 140, .3); transition: transform .15s; }
+    .qnxt:hover { transform: translateY(-2px); } .qnxt.show { display: inline-block; }
+    .scorescreen { display: none; text-align: center; padding: 1rem 0; }
+    .scorescreen.show { display: block; }
+    .scorebig { font-size: 5rem; font-weight: 900; background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+    .scoreemi { font-size: 2.8rem; margin: .5rem 0; }
+    .scoremsg { font-size: 1rem; font-weight: 700; color: var(--muted); margin-bottom: 1.8rem; }
+    .restartbtn { background: #fff; border: 2.5px solid var(--pink); color: var(--pink); padding: .7rem 1.8rem; border-radius: 30px; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: .92rem; font-weight: 800; transition: all .2s; }
+    .restartbtn:hover { background: var(--pink); color: #fff; }
 
-/* ── FOOTER ── */
-footer{background:linear-gradient(135deg,#4a0080,var(--purple),var(--pink));color:#fff;text-align:center;padding:3rem 2rem;}
-footer h3{font-size:1.5rem;font-weight:900;margin-bottom:.5rem;}
-footer p{opacity:.8;font-size:.9rem;font-weight:600;}
-</style>
+    /* ── FOOTER ── */
+    footer { background: linear-gradient(135deg, #4a0080, var(--purple), var(--pink)); color: #fff; text-align: center; padding: 3rem 2rem; }
+    footer h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: .5rem; }
+    footer p { opacity: .8; font-size: .9rem; font-weight: 600; }
+  </style>
 </head>
 <body>
 
-<!-- floating shapes -->
-<div class="float-wrap" aria-hidden="true">
-  <span style="left:5%;animation-duration:14s;animation-delay:0s">📊</span>
-  <span style="left:20%;animation-duration:18s;animation-delay:3s">✨</span>
-  <span style="left:40%;animation-duration:12s;animation-delay:6s">📈</span>
-  <span style="left:60%;animation-duration:16s;animation-delay:1s">🎲</span>
-  <span style="left:75%;animation-duration:20s;animation-delay:4s">🎵</span>
-  <span style="left:90%;animation-duration:13s;animation-delay:7s">💜</span>
-</div>
-
-<!-- ═══ HERO ═══ -->
-<div class="hero" id="top">
-  <div class="hero-pill">📊 Statistics Project · BSc Div B</div>
-  <h1>The Math Behind<br>the <em>Magic</em> ✨</h1>
-  <p class="hero-sub">How statistics secretly powers Instagram, YouTube, Spotify &amp; Netflix — every single second.</p>
-  <div class="team-row">
-    <span class="tpill">Jiya Kaur Kohli · 147</span>
-    <span class="tpill">Kavya Batra · 162</span>
-    <span class="tpill">Kavya Kuhad · 164</span>
-    <span class="tpill">Naisha Bagga · 202</span>
-    <span class="tpill">Manya Goel · 189</span>
-    <span class="tpill">Nama Hasini · 205</span>
+  <div class="float-wrap" aria-hidden="true">
+    <span style="left:5%;animation-duration:14s;animation-delay:0s">📊</span>
+    <span style="left:20%;animation-duration:18s;animation-delay:3s">✨</span>
+    <span style="left:40%;animation-duration:12s;animation-delay:6s">📈</span>
+    <span style="left:60%;animation-duration:16s;animation-delay:1s">🎲</span>
+    <span style="left:75%;animation-duration:20s;animation-delay:4s">🎵</span>
+    <span style="left:90%;animation-duration:13s;animation-delay:7s">💜</span>
   </div>
-  <div class="scroll-cta" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})">
-    <span>EXPLORE THE MAGIC</span><span style="font-size:1.6rem">↓</span>
-  </div>
-</div>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-  <button class="nbtn on" onclick="goto('s1',this)">🔢 Overview</button>
-  <button class="nbtn" onclick="goto('s2',this)">📱 App Cases</button>
-  <button class="nbtn" onclick="goto('s3',this)">⚡ Live Demo</button>
-  <button class="nbtn" onclick="goto('s4',this)">🎯 Quiz</button>
-</nav>
-
-<!-- ═══ OVERVIEW ═══ -->
-<div class="sec" id="s1">
-  <div class="tag">01 — By the Numbers</div>
-  <h2 class="title">Algorithms aren't magic.<br>They're <span>statistics.</span></h2>
-  <p class="desc">Every like, stream, and thumbnail you see was decided by a mathematical model. Here's the scale of it.</p>
-
-  <div class="cgrid">
-    <div class="ccard" style="--cc:#e91e8c">
-      <div class="cemi">📸</div>
-      <div class="cnum" id="c1">0</div>
-      <div class="clbl">Daily Active Users</div>
-      <div class="capp">Instagram</div>
+  <div class="hero" id="top">
+    <div class="hero-pill">📊 Statistics Project · BSc Div B</div>
+    <h1>The Math Behind<br>the <em>Magic</em> ✨</h1>
+    <p class="hero-sub">How statistics secretly powers Instagram, YouTube, Spotify &amp; Netflix — every single second.</p>
+    <div class="team-row">
+      <span class="tpill">Jiya Kaur Kohli · 147</span>
+      <span class="tpill">Kavya Batra · 162</span>
+      <span class="tpill">Kavya Kuhad · 164</span>
+      <span class="tpill">Naisha Bagga · 202</span>
+      <span class="tpill">Manya Goel · 189</span>
+      <span class="tpill">Nama Hasini · 205</span>
     </div>
-    <div class="ccard" style="--cc:#ff0000">
-      <div class="cemi">▶️</div>
-      <div class="cnum" id="c2">0</div>
-      <div class="clbl">Video Watched Daily</div>
-      <div class="capp">YouTube</div>
-    </div>
-    <div class="ccard" style="--cc:#1db954">
-      <div class="cemi">🎵</div>
-      <div class="cnum" id="c3">0</div>
-      <div class="clbl">Monthly Active Users</div>
-      <div class="capp">Spotify</div>
-    </div>
-    <div class="ccard" style="--cc:#e50914">
-      <div class="cemi">🎬</div>
-      <div class="cnum" id="c4">0</div>
-      <div class="clbl">Views from Algo Recs</div>
-      <div class="capp">Netflix</div>
-    </div>
-    <div class="ccard" style="--cc:#9b27b0">
-      <div class="cemi">🧮</div>
-      <div class="cnum" id="c5">0</div>
-      <div class="clbl">Stat Methods Covered</div>
-      <div class="capp">This Project</div>
+    <div class="scroll-cta" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})">
+      <span>EXPLORE THE MAGIC</span><span style="font-size:1.6rem">↓</span>
     </div>
   </div>
 
-  <p style="font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem">The 5 Statistical Tools</p>
-  <div class="chips">
-    <div class="chip"><span class="chip-ico">📈</span><div><div class="chip-name">Regression</div><div class="chip-sub">Predict engagement scores</div></div></div>
-    <div class="chip"><span class="chip-ico">🏷️</span><div><div class="chip-name">Classification</div><div class="chip-sub">Assign labels to content</div></div></div>
-    <div class="chip"><span class="chip-ico">🫧</span><div><div class="chip-name">Clustering</div><div class="chip-sub">Group similar users</div></div></div>
-    <div class="chip"><span class="chip-ico">📉</span><div><div class="chip-name">Time-Series</div><div class="chip-sub">Track patterns over time</div></div></div>
-    <div class="chip"><span class="chip-ico">🎲</span><div><div class="chip-name">Probability</div><div class="chip-sub">Model click likelihood</div></div></div>
-  </div>
-</div>
+  <nav>
+    <button class="nbtn on" onclick="goto('s1',this)">🔢 Overview</button>
+    <button class="nbtn" onclick="goto('s2',this)">📱 App Cases</button>
+    <button class="nbtn" onclick="goto('s3',this)">⚡ Live Demo</button>
+    <button class="nbtn" onclick="goto('s4',this)">🎯 Quiz</button>
+  </nav>
 
-<div class="wavy"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#f3e5f5" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
-<div style="background:#f3e5f5;height:6px"></div>
-<div class="wavy" style="background:#f3e5f5"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#fdf0f8" d="M0,30 C360,0 1080,60 1440,30 L1440,0 L0,0 Z"/></svg></div>
+  <div class="sec" id="s1">
+    <div class="tag">01 — By the Numbers</div>
+    <h2 class="title">Algorithms aren't magic.<br>They're <span>statistics.</span></h2>
+    <p class="desc">Every like, stream, and thumbnail you see was decided by a mathematical model. Here's the scale of it.</p>
 
-<!-- ═══ APP CASES ═══ -->
-<div class="sec" id="s2">
-  <div class="tag">02 — Case Studies</div>
-  <h2 class="title">Behind Your <span>Favourite Apps</span></h2>
-  <p class="desc">Click each app tab to see exactly how statistics shapes your experience.</p>
-
-  <div class="tab-row">
-    <button class="atab on" onclick="showApp('insta',this)">📸 Instagram</button>
-    <button class="atab" onclick="showApp('yt',this)">▶️ YouTube</button>
-    <button class="atab" onclick="showApp('spot',this)">🎵 Spotify</button>
-    <button class="atab" onclick="showApp('nflx',this)">🎬 Netflix</button>
-  </div>
-
-  <!-- INSTAGRAM -->
-  <div class="apanel on" id="ap-insta">
-    <div class="ainfo">
-      <div class="ahead">
-        <div class="alogo" style="background:#fce4ec">📸</div>
-        <div><div class="atitle">Instagram</div><span class="abadge" style="background:#fce4ec;color:#e91e8c">📈 Regression</span></div>
+    <div class="cgrid">
+      <div class="ccard" style="--cc:#e91e8c">
+        <div class="cemi">📸</div>
+        <div class="cnum" id="c1">0</div>
+        <div class="clbl">Daily Active Users</div>
+        <div class="capp">Instagram</div>
       </div>
-      <ul class="apoints">
-        <li>Every post gets an <strong>"interest score"</strong> before you see it — predicting your likelihood to engage</li>
-        <li>Inputs: reels watched to end, posts liked/saved, accounts you interact with, topics you follow</li>
-        <li>Formula: <code style="background:var(--ppale);padding:.1rem .4rem;border-radius:6px;font-size:.8rem">Score = β₀ + β₁(likes) + β₂(watch_time) + ε</code></li>
-        <li>The model <strong>continuously re-trains</strong> based on your latest behaviour</li>
-      </ul>
-      <div class="econbox">
-        <h4>💰 Economic Angle</h4>
-        <p>Higher engagement → more ad exposure → more revenue. Regression creates incentives for creators to produce high-performing content — turning math into a creator economy.</p>
+      <div class="ccard" style="--cc:#ff0000">
+        <div class="cemi">▶️</div>
+        <div class="cnum" id="c2">0</div>
+        <div class="clbl">Video Watched Daily</div>
+        <div class="capp">YouTube</div>
+      </div>
+      <div class="ccard" style="--cc:#1db954">
+        <div class="cemi">🎵</div>
+        <div class="cnum" id="c3">0</div>
+        <div class="clbl">Monthly Active Users</div>
+        <div class="capp">Spotify</div>
+      </div>
+      <div class="ccard" style="--cc:#e50914">
+        <div class="cemi">🎬</div>
+        <div class="cnum" id="c4">0</div>
+        <div class="clbl">Views from Algo Recs</div>
+        <div class="capp">Netflix</div>
+      </div>
+      <div class="ccard" style="--cc:#9b27b0">
+        <div class="cemi">🧮</div>
+        <div class="cnum" id="c5">0</div>
+        <div class="clbl">Stat Methods Covered</div>
+        <div class="capp">This Project</div>
       </div>
     </div>
-    <div class="achartbox">
-      <h3>Engagement Score vs. Interaction Rate</h3>
-      <canvas id="chart-insta"></canvas>
+
+    <p style="font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem">The 5 Statistical Tools</p>
+    <div class="chips">
+      <div class="chip"><span class="chip-ico">📈</span><div><div class="chip-name">Regression</div><div class="chip-sub">Predict engagement scores</div></div></div>
+      <div class="chip"><span class="chip-ico">🏷️</span><div><div class="chip-name">Classification</div><div class="chip-sub">Assign labels to content</div></div></div>
+      <div class="chip"><span class="chip-ico">🫧</span><div><div class="chip-name">Clustering</div><div class="chip-sub">Group similar users</div></div></div>
+      <div class="chip"><span class="chip-ico">📉</span><div><div class="chip-name">Time-Series</div><div class="chip-sub">Track patterns over time</div></div></div>
+      <div class="chip"><span class="chip-ico">🎲</span><div><div class="chip-name">Probability</div><div class="chip-sub">Model click likelihood</div></div></div>
     </div>
   </div>
 
-  <!-- YOUTUBE -->
-  <div class="apanel" id="ap-yt">
-    <div class="ainfo">
-      <div class="ahead">
-        <div class="alogo" style="background:#ffebee">▶️</div>
-        <div><div class="atitle">YouTube</div><span class="abadge" style="background:#ffebee;color:#ff0000">🏷️ Classification + 📉 Time-Series</span></div>
-      </div>
-      <ul class="apoints">
-        <li><strong>Classification</strong>: every uploaded video is auto-tagged by content, audio &amp; visuals instantly</li>
-        <li>Watch "Home Cooking" → classified as Cooking Enthusiast → precision ads follow</li>
-        <li><strong>Time-Series (ARIMA)</strong>: tracks when you watch — evenings avg 19 min/day, night binges run longer</li>
-        <li>Exam season = short clips; holiday = long binge sessions. Algorithm adapts in real-time.</li>
-      </ul>
-      <div class="econbox">
-        <h4>💰 Economic Angle</h4>
-        <p>Extra watch time lifts ad revenue by 20–30%. Creators who upload at optimal times (using time-series data) earn 30–50% more per view.</p>
-      </div>
-    </div>
-    <div class="achartbox">
-      <h3>Viewing Time by Hour of Day</h3>
-      <canvas id="chart-yt"></canvas>
-    </div>
-  </div>
+  <div class="wavy"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#f3e5f5" d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
+  <div style="background:#f3e5f5;height:6px"></div>
+  <div class="wavy" style="background:#f3e5f5"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#fdf0f8" d="M0,30 C360,0 1080,60 1440,30 L1440,0 L0,0 Z"/></svg></div>
 
-  <!-- SPOTIFY -->
-  <div class="apanel" id="ap-spot">
-    <div class="ainfo">
-      <div class="ahead">
-        <div class="alogo" style="background:#e8f5e9">🎵</div>
-        <div><div class="atitle">Spotify</div><span class="abadge" style="background:#e8f5e9;color:#1db954">🫧 Clustering (K-Means)</span></div>
-      </div>
-      <ul class="apoints">
-        <li>Groups 600M+ users with similar listening habits — same genres, artists, tempos &amp; moods</li>
-        <li><strong>No pre-set labels</strong>: K-Means discovers hidden groups automatically from behaviour</li>
-        <li>Music popular in your cluster gets recommended → Discover Weekly is born</li>
-        <li>Effectively finds your <strong>"music twin"</strong> and borrows songs from their taste</li>
-      </ul>
-      <div class="econbox">
-        <h4>💰 Economic Angle</h4>
-        <p>Clustering increases listening time → higher subscription &amp; ad revenue. Indie artists gain visibility through clusters, reducing the monopoly of mainstream labels.</p>
-      </div>
+  <div class="sec" id="s2">
+    <div class="tag">02 — Case Studies</div>
+    <h2 class="title">Behind Your <span>Favourite Apps</span></h2>
+    <p class="desc">Click each app tab to see exactly how statistics shapes your experience.</p>
+
+    <div class="tab-row">
+      <button class="atab on" onclick="showApp('insta',this)">📸 Instagram</button>
+      <button class="atab" onclick="showApp('yt',this)">▶️ YouTube</button>
+      <button class="atab" onclick="showApp('spot',this)">🎵 Spotify</button>
+      <button class="atab" onclick="showApp('nflx',this)">🎬 Netflix</button>
     </div>
-    <div class="achartbox">
-      <h3>User Clusters by Listening Behaviour</h3>
-      <canvas id="chart-spot"></canvas>
-    </div>
-  </div>
 
-  <!-- NETFLIX -->
-  <div class="apanel" id="ap-nflx">
-    <div class="ainfo">
-      <div class="ahead">
-        <div class="alogo" style="background:#ffebee">🎬</div>
-        <div><div class="atitle">Netflix</div><span class="abadge" style="background:#ffebee;color:#e50914">🎲 Probability Models</span></div>
-      </div>
-      <ul class="apoints">
-        <li>Each thumbnail click = binary outcome modelled as <strong>X ~ Bernoulli(p)</strong></li>
-        <li>Click probability: <code style="background:var(--ppale);padding:.1rem .4rem;border-radius:6px;font-size:.8rem">P̂ = Clicks ÷ Impressions</code></li>
-        <li>A/B testing + Thompson Sampling update probabilities in real-time across millions of users</li>
-        <li><strong>You and your friend see different Stranger Things thumbnails</strong> — both personalised for max CTR</li>
-      </ul>
-      <div class="econbox">
-        <h4>💰 Economic Angle</h4>
-        <p>Higher CTR → more titles started → reduced churn → retained subscription revenue. Probability models allocate scarce consumer attention efficiently — core microeconomics in action.</p>
-      </div>
-    </div>
-    <div class="achartbox">
-      <h3>Thumbnail Click Probability by Variant</h3>
-      <canvas id="chart-nflx"></canvas>
-    </div>
-  </div>
-</div>
-
-<div class="wavy"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#f3e5f5" d="M0,20 C480,55 960,0 1440,35 L1440,60 L0,60 Z"/></svg></div>
-<div style="background:#f3e5f5">
-
-<!-- ═══ LIVE DEMO ═══ -->
-<div class="sec" id="s3">
-  <div class="tag">03 — Live Demo</div>
-  <h2 class="title">See Stats <span>Work Live ⚡</span></h2>
-  <p class="desc">Play with the inputs — watch the algorithms respond exactly like the real apps do.</p>
-
-  <div class="dtab-row">
-    <button class="dtab on" onclick="showDemo('reg',this)">📈 Regression Demo</button>
-    <button class="dtab" onclick="showDemo('clust',this)">🫧 Clustering Demo</button>
-    <button class="dtab" onclick="showDemo('prob',this)">🎲 Probability Demo</button>
-  </div>
-
-  <!-- REGRESSION -->
-  <div class="dpanel on" id="dp-reg">
-    <div class="dbox">
-      <h3>📸 Instagram: Predict Your Interest Score</h3>
-      <p class="dsub">Adjust the sliders to simulate your Instagram usage — watch your interest score change live!</p>
-      <div class="srow"><label>⏱️ Daily time on app</label><input type="range" min="5" max="120" value="30" id="r1" oninput="calcReg()"><span class="sval" id="r1v">30 min</span></div>
-      <div class="srow"><label>❤️ Posts liked per day</label><input type="range" min="0" max="50" value="10" id="r2" oninput="calcReg()"><span class="sval" id="r2v">10</span></div>
-      <div class="srow"><label>🎬 Reels watched fully</label><input type="range" min="0" max="30" value="5" id="r3" oninput="calcReg()"><span class="sval" id="r3v">5</span></div>
-      <div class="srow"><label>💬 Comments / DMs sent</label><input type="range" min="0" max="20" value="3" id="r4" oninput="calcReg()"><span class="sval" id="r4v">3</span></div>
-      <div class="pred">
-        <div class="pred-lbl">Your Predicted Interest Score</div>
-        <div class="pred-val" id="rout">47.3</div>
-        <div class="pred-sub" id="rsub">Moderate engagement — mix of familiar and new content</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CLUSTERING -->
-  <div class="dpanel" id="dp-clust">
-    <div class="dbox">
-      <h3>🎵 Spotify: Which Cluster Are You In?</h3>
-      <p class="dsub">Rate your music preferences — K-Means will assign you to a listener cluster instantly!</p>
-      <div class="csliders">
-        <div>
-          <div class="srow"><label>🥁 Energy (Low→High)</label><input type="range" min="1" max="10" value="5" id="k1" oninput="calcClust()"><span class="sval" id="k1v">5</span></div>
-          <div class="srow"><label>🎸 Acoustic-ness</label><input type="range" min="1" max="10" value="5" id="k2" oninput="calcClust()"><span class="sval" id="k2v">5</span></div>
+    <div class="apanel on" id="ap-insta">
+      <div class="ainfo">
+        <div class="ahead">
+          <div class="alogo" style="background:#fce4ec">📸</div>
+          <div><div class="atitle">Instagram</div><span class="abadge" style="background:#fce4ec;color:#e91e8c">📈 Regression</span></div>
         </div>
-        <div>
-          <div class="srow"><label>💃 Danceability</label><input type="range" min="1" max="10" value="5" id="k3" oninput="calcClust()"><span class="sval" id="k3v">5</span></div>
-          <div class="srow"><label>🌙 Mood (Sad→Happy)</label><input type="range" min="1" max="10" value="5" id="k4" oninput="calcClust()"><span class="sval" id="k4v">5</span></div>
+        <ul class="apoints">
+          <li>Every post gets an <strong>"interest score"</strong> before you see it — predicting your likelihood to engage</li>
+          <li>Inputs: reels watched to end, posts liked/saved, accounts you interact with, topics you follow</li>
+          <li>Formula: <code style="background:var(--ppale);padding:.1rem .4rem;border-radius:6px;font-size:.8rem">Score = β₀ + β₁(likes) + β₂(watch_time) + ε</code></li>
+          <li>The model <strong>continuously re-trains</strong> based on your latest behaviour</li>
+        </ul>
+        <div class="econbox">
+          <h4>💰 Economic Angle</h4>
+          <p>Higher engagement → more ad exposure → more revenue. Regression creates incentives for creators to produce high-performing content — turning math into a creator economy.</p>
         </div>
       </div>
-      <div class="clusters">
-        <div class="cl" id="cl0"><div class="ci">🎸</div><div class="cn">Indie / Alt</div><div class="cd">Low energy, acoustic</div></div>
-        <div class="cl" id="cl1"><div class="ci">🔊</div><div class="cn">EDM / Pop</div><div class="cd">High energy, danceable</div></div>
-        <div class="cl" id="cl2"><div class="ci">🎤</div><div class="cn">Hip-Hop / R&B</div><div class="cd">High dance, happy</div></div>
-        <div class="cl" id="cl3"><div class="ci">🎹</div><div class="cn">Classical / Jazz</div><div class="cd">Low energy, very acoustic</div></div>
-        <div class="cl" id="cl4"><div class="ci">🤘</div><div class="cn">Rock / Metal</div><div class="cd">High energy, low dance</div></div>
+      <div class="achartbox">
+        <h3>Engagement Score vs. Interaction Rate</h3>
+        <canvas id="chart-insta"></canvas>
       </div>
-      <p style="margin-top:.9rem;font-size:.78rem;font-weight:700;color:var(--muted)">✦ Highlighted cluster = your match! Spotify's Discover Weekly pulls songs from similar users in that cluster.</p>
     </div>
-  </div>
 
-  <!-- PROBABILITY -->
-  <div class="dpanel" id="dp-prob">
-    <div class="dbox">
-      <h3>🎬 Netflix: Which Thumbnail Gets Your Click?</h3>
-      <p class="dsub">Click the one you'd actually tap. Watch P(Click) update like Netflix's real Bernoulli model!</p>
-      <div class="tgrid">
-        <div class="titem win" onclick="tClick(0)"><div class="temi">🎭</div><div class="tname">Action Scene</div><div class="tbar-wrap"><div class="tbar" id="tb0" style="width:12%"></div></div><div class="tpct" id="tp0">12%</div></div>
-        <div class="titem" onclick="tClick(1)"><div class="temi">🧒</div><div class="tname">Lead Actor</div><div class="tbar-wrap"><div class="tbar" id="tb1" style="width:24%"></div></div><div class="tpct" id="tp1">24% 👑</div></div>
-        <div class="titem" onclick="tClick(2)"><div class="temi">🔤</div><div class="tname">Title Card</div><div class="tbar-wrap"><div class="tbar" id="tb2" style="width:8%"></div></div><div class="tpct" id="tp2">8%</div></div>
-        <div class="titem" onclick="tClick(3)"><div class="temi">👥</div><div class="tname">Ensemble Cast</div><div class="tbar-wrap"><div class="tbar" id="tb3" style="width:19%"></div></div><div class="tpct" id="tp3">19%</div></div>
-        <div class="titem" onclick="tClick(4)"><div class="temi">👹</div><div class="tname">Villain</div><div class="tbar-wrap"><div class="tbar" id="tb4" style="width:17%"></div></div><div class="tpct" id="tp4">17%</div></div>
-        <div class="titem" onclick="tClick(5)"><div class="temi">😱</div><div class="tname">Dramatic Moment</div><div class="tbar-wrap"><div class="tbar" id="tb5" style="width:20%"></div></div><div class="tpct" id="tp5">20%</div></div>
+    <div class="apanel" id="ap-yt">
+      <div class="ainfo">
+        <div class="ahead">
+          <div class="alogo" style="background:#ffebee">▶️</div>
+          <div><div class="atitle">YouTube</div><span class="abadge" style="background:#ffebee;color:#ff0000">🏷️ Classification + 📉 Time-Series</span></div>
+        </div>
+        <ul class="apoints">
+          <li><strong>Classification</strong>: every uploaded video is auto-tagged by content, audio &amp; visuals instantly</li>
+          <li>Watch "Home Cooking" → classified as Cooking Enthusiast → precision ads follow</li>
+          <li><strong>Time-Series (ARIMA)</strong>: tracks when you watch — evenings avg 19 min/day, night binges run longer</li>
+          <li>Exam season = short clips; holiday = long binge sessions. Algorithm adapts in real-time.</li>
+        </ul>
+        <div class="econbox">
+          <h4>💰 Economic Angle</h4>
+          <p>Extra watch time lifts ad revenue by 20–30%. Creators who upload at optimal times (using time-series data) earn 30–50% more per view.</p>
+        </div>
       </div>
-      <div class="pinfo" id="pinfo">💡 Click any thumbnail! Each click updates P̂ = Clicks ÷ Impressions. Netflix runs this across millions of users — the 👑 winner gets shown to your user segment.</div>
+      <div class="achartbox">
+        <h3>Viewing Time by Hour of Day</h3>
+        <canvas id="chart-yt"></canvas>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-spot">
+      <div class="ainfo">
+        <div class="ahead">
+          <div class="alogo" style="background:#e8f5e9">🎵</div>
+          <div><div class="atitle">Spotify</div><span class="abadge" style="background:#e8f5e9;color:#1db954">🫧 Clustering (K-Means)</span></div>
+        </div>
+        <ul class="apoints">
+          <li>Groups 600M+ users with similar listening habits — same genres, artists, tempos &amp; moods</li>
+          <li><strong>No pre-set labels</strong>: K-Means discovers hidden groups automatically from behaviour</li>
+          <li>Music popular in your cluster gets recommended → Discover Weekly is born</li>
+          <li>Effectively finds your <strong>"music twin"</strong> and borrows songs from their taste</li>
+        </ul>
+        <div class="econbox">
+          <h4>💰 Economic Angle</h4>
+          <p>Clustering increases listening time → higher subscription &amp; ad revenue. Indie artists gain visibility through clusters, reducing the monopoly of mainstream labels.</p>
+        </div>
+      </div>
+      <div class="achartbox">
+        <h3>User Clusters by Listening Behaviour</h3>
+        <canvas id="chart-spot"></canvas>
+      </div>
+    </div>
+
+    <div class="apanel" id="ap-nflx">
+      <div class="ainfo">
+        <div class="ahead">
+          <div class="alogo" style="background:#ffebee">🎬</div>
+          <div><div class="atitle">Netflix</div><span class="abadge" style="background:#ffebee;color:#e50914">🎲 Probability Models</span></div>
+        </div>
+        <ul class="apoints">
+          <li>Each thumbnail click = binary outcome modelled as <strong>X ~ Bernoulli(p)</strong></li>
+          <li>Click probability: <code style="background:var(--ppale);padding:.1rem .4rem;border-radius:6px;font-size:.8rem">P̂ = Clicks ÷ Impressions</code></li>
+          <li>A/B testing + Thompson Sampling update probabilities in real-time across millions of users</li>
+          <li><strong>You and your friend see different Stranger Things thumbnails</strong> — both personalised for max CTR</li>
+        </ul>
+        <div class="econbox">
+          <h4>💰 Economic Angle</h4>
+          <p>Higher CTR → more titles started → reduced churn → retained subscription revenue. Probability models allocate scarce consumer attention efficiently — core microeconomics in action.</p>
+        </div>
+      </div>
+      <div class="achartbox">
+        <h3>Thumbnail Click Probability by Variant</h3>
+        <canvas id="chart-nflx"></canvas>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
-<div class="wavy" style="background:#f3e5f5"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#fdf0f8" d="M0,40 C480,5 960,55 1440,20 L1440,0 L0,0 Z"/></svg></div>
+  <div class="wavy"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#f3e5f5" d="M0,20 C480,55 960,0 1440,35 L1440,60 L0,60 Z"/></svg></div>
+  <div style="background:#f3e5f5">
 
-<!-- ═══ QUIZ ═══ -->
-<div class="sec" id="s4">
-  <div class="tag">04 — Test Yourself</div>
-  <h2 class="title">Stats <span>IQ Check 🎯</span></h2>
-  <p class="desc">5 questions from the project. Great for audience participation — ask the crowd out loud!</p>
-  <div class="qbox">
-    <div class="qbar" id="qbar"></div>
-    <div id="qmain"></div>
-    <div class="scorescreen" id="scorescreen">
-      <div class="scorebig" id="scorebig"></div>
-      <div class="scoreemi" id="scoreemi"></div>
-      <div class="scoremsg" id="scoremsg"></div>
-      <button class="restartbtn" onclick="startQuiz()">↺ Try Again</button>
+  <div class="sec" id="s3">
+    <div class="tag">03 — Live Demo</div>
+    <h2 class="title">See Stats <span>Work Live ⚡</span></h2>
+    <p class="desc">Play with the inputs — watch the algorithms respond exactly like the real apps do.</p>
+
+    <div class="dtab-row">
+      <button class="dtab on" onclick="showDemo('reg',this)">📈 Regression Demo</button>
+      <button class="dtab" onclick="showDemo('clust',this)">🫧 Clustering Demo</button>
+      <button class="dtab" onclick="showDemo('prob',this)">🎲 Probability Demo</button>
+    </div>
+
+    <div class="dpanel on" id="dp-reg">
+      <div class="dbox">
+        <h3>📸 Instagram: Predict Your Interest Score</h3>
+        <p class="dsub">Adjust the sliders to simulate your Instagram usage — watch your interest score change live!</p>
+        <div class="srow"><label>⏱️ Daily time on app</label><input type="range" min="5" max="120" value="30" id="r1" oninput="calcReg()"><span class="sval" id="r1v">30 min</span></div>
+        <div class="srow"><label>❤️ Posts liked per day</label><input type="range" min="0" max="50" value="10" id="r2" oninput="calcReg()"><span class="sval" id="r2v">10</span></div>
+        <div class="srow"><label>🎬 Reels watched fully</label><input type="range" min="0" max="30" value="5" id="r3" oninput="calcReg()"><span class="sval" id="r3v">5</span></div>
+        <div class="srow"><label>💬 Comments / DMs sent</label><input type="range" min="0" max="20" value="3" id="r4" oninput="calcReg()"><span class="sval" id="r4v">3</span></div>
+        <div class="pred">
+          <div class="pred-lbl">Your Predicted Interest Score</div>
+          <div class="pred-val" id="rout">47.3</div>
+          <div class="pred-sub" id="rsub">Moderate engagement — mix of familiar and new content</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dp-clust">
+      <div class="dbox">
+        <h3>🎵 Spotify: Which Cluster Are You In?</h3>
+        <p class="dsub">Rate your music preferences — K-Means will assign you to a listener cluster instantly!</p>
+        <div class="csliders">
+          <div>
+            <div class="srow"><label>🥁 Energy (Low→High)</label><input type="range" min="1" max="10" value="5" id="k1" oninput="calcClust()"><span class="sval" id="k1v">5</span></div>
+            <div class="srow"><label>🎸 Acoustic-ness</label><input type="range" min="1" max="10" value="5" id="k2" oninput="calcClust()"><span class="sval" id="k2v">5</span></div>
+          </div>
+          <div>
+            <div class="srow"><label>💃 Danceability</label><input type="range" min="1" max="10" value="5" id="k3" oninput="calcClust()"><span class="sval" id="k3v">5</span></div>
+            <div class="srow"><label>🌙 Mood (Sad→Happy)</label><input type="range" min="1" max="10" value="5" id="k4" oninput="calcClust()"><span class="sval" id="k4v">5</span></div>
+          </div>
+        </div>
+        <div class="clusters">
+          <div class="cl" id="cl0"><div class="ci">🎸</div><div class="cn">Indie / Alt</div><div class="cd">Low energy, acoustic</div></div>
+          <div class="cl" id="cl1"><div class="ci">🔊</div><div class="cn">EDM / Pop</div><div class="cd">High energy, danceable</div></div>
+          <div class="cl" id="cl2"><div class="ci">🎤</div><div class="cn">Hip-Hop / R&B</div><div class="cd">High dance, happy</div></div>
+          <div class="cl" id="cl3"><div class="ci">🎹</div><div class="cn">Classical / Jazz</div><div class="cd">Low energy, very acoustic</div></div>
+          <div class="cl" id="cl4"><div class="ci">🤘</div><div class="cn">Rock / Metal</div><div class="cd">High energy, low dance</div></div>
+        </div>
+        <p style="margin-top:.9rem;font-size:.78rem;font-weight:700;color:var(--muted)">✦ Highlighted cluster = your match! Spotify's Discover Weekly pulls songs from similar users in that cluster.</p>
+      </div>
+    </div>
+
+    <div class="dpanel" id="dp-prob">
+      <div class="dbox">
+        <h3>🎬 Netflix: Which Thumbnail Gets Your Click?</h3>
+        <p class="dsub">Click the one you'd actually tap. Watch P(Click) update like Netflix's real Bernoulli model!</p>
+        <div class="tgrid">
+          <div class="titem win" onclick="tClick(0)"><div class="temi">🎭</div><div class="tname">Action Scene</div><div class="tbar-wrap"><div class="tbar" id="tb0" style="width:12%"></div></div><div class="tpct" id="tp0">12%</div></div>
+          <div class="titem" onclick="tClick(1)"><div class="temi">🧒</div><div class="tname">Lead Actor</div><div class="tbar-wrap"><div class="tbar" id="tb1" style="width:24%"></div></div><div class="tpct" id="tp1">24% 👑</div></div>
+          <div class="titem" onclick="tClick(2)"><div class="temi">🔤</div><div class="tname">Title Card</div><div class="tbar-wrap"><div class="tbar" id="tb2" style="width:8%"></div></div><div class="tpct" id="tp2">8%</div></div>
+          <div class="titem" onclick="tClick(3)"><div class="temi">👥</div><div class="tname">Ensemble Cast</div><div class="tbar-wrap"><div class="tbar" id="tb3" style="width:19%"></div></div><div class="tpct" id="tp3">19%</div></div>
+          <div class="titem" onclick="tClick(4)"><div class="temi">👹</div><div class="tname">Villain</div><div class="tbar-wrap"><div class="tbar" id="tb4" style="width:17%"></div></div><div class="tpct" id="tp4">17%</div></div>
+          <div class="titem" onclick="tClick(5)"><div class="temi">😱</div><div class="tname">Dramatic Moment</div><div class="tbar-wrap"><div class="tbar" id="tb5" style="width:20%"></div></div><div class="tpct" id="tp5">20%</div></div>
+        </div>
+        <div class="pinfo" id="pinfo">💡 Click any thumbnail! Each click updates P̂ = Clicks ÷ Impressions. Netflix runs this across millions of users — the 👑 winner gets shown to your user segment.</div>
+      </div>
     </div>
   </div>
-</div>
+  </div>
 
-<footer>
-  <h3>The Math Behind the Magic ✨</h3>
-  <p>Statistics isn't just a subject — it's what makes your digital world tick every single day.</p>
-  <p style="opacity:.6;font-size:.78rem;margin-top:.5rem">Jiya · Kavya B · Kavya K · Naisha · Manya · Nama &nbsp;|&nbsp; Bsc Div B Statistics Project</p>
-</footer>
+  <div class="wavy" style="background:#f3e5f5"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path fill="#fdf0f8" d="M0,40 C480,5 960,55 1440,20 L1440,0 L0,0 Z"/></svg></div>
 
-<script>
-// ── NAV ──
-function goto(id, btn) {
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-  document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-}
+  <div class="sec" id="s4">
+    <div class="tag">04 — Test Yourself</div>
+    <h2 class="title">Stats <span>IQ Check 🎯</span></h2>
+    <p class="desc">5 questions from the project. Great for audience participation — ask the crowd out loud!</p>
+    <div class="qbox">
+      <div class="qbar" id="qbar"></div>
+      <div id="qmain"></div>
+      <div class="scorescreen" id="scorescreen">
+        <div class="scorebig" id="scorebig"></div>
+        <div class="scoreemi" id="scoreemi"></div>
+        <div class="scoremsg" id="scoremsg"></div>
+        <button class="restartbtn" onclick="startQuiz()">↺ Try Again</button>
+      </div>
+    </div>
+  </div>
 
-// ── COUNTERS ──
-var countered = false;
-function runCounters() {
-  if (countered) return;
-  countered = true;
-  var targets = [{id:'c1',val:3.5,sfx:'B+',dec:true},{id:'c2',val:500,sfx:'M hrs',dec:false},{id:'c3',val:602,sfx:'M',dec:false},{id:'c4',val:80,sfx:'% views',dec:false},{id:'c5',val:5,sfx:' tools',dec:false}];
-  targets.forEach(function(t) {
-    var el = document.getElementById(t.id);
-    var start = performance.now();
-    var dur = 1600;
-    function tick(now) {
-      var p = Math.min((now - start) / dur, 1);
-      var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = (t.dec ? (e * t.val).toFixed(1) : Math.floor(e * t.val)) + t.sfx;
-      if (p < 1) requestAnimationFrame(tick);
+  <footer>
+    <h3>The Math Behind the Magic ✨</h3>
+    <p>Statistics isn't just a subject — it's what makes your digital world tick every single day.</p>
+    <p style="opacity:.6;font-size:.78rem;margin-top:.5rem">Jiya · Kavya B · Kavya K · Naisha · Manya · Nama &nbsp;|&nbsp; Bsc Div B Statistics Project</p>
+  </footer>
+
+  <script>
+    // ── NAV ──
+    function goto(id, btn) {
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+      document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
     }
-    requestAnimationFrame(tick);
-  });
-}
-window.addEventListener('scroll', function() {
-  var el = document.getElementById('s1');
-  if (el && el.getBoundingClientRect().top < window.innerHeight * 0.8) runCounters();
-}, {passive:true});
-setTimeout(runCounters, 800);
 
-// ── APP TABS ──
-function showApp(id, btn) {
-  document.querySelectorAll('.apanel').forEach(function(p) { p.classList.remove('on'); });
-  document.querySelectorAll('.atab').forEach(function(b) { b.classList.remove('on'); });
-  document.getElementById('ap-' + id).classList.add('on');
-  btn.classList.add('on');
-}
+    // ── COUNTERS ──
+    var countered = false;
+    function runCounters() {
+      if (countered) return;
+      countered = true;
+      var targets = [{id:'c1',val:3.5,sfx:'B+',dec:true},{id:'c2',val:500,sfx:'M hrs',dec:false},{id:'c3',val:602,sfx:'M',dec:false},{id:'c4',val:80,sfx:'% views',dec:false},{id:'c5',val:5,sfx:' tools',dec:false}];
+      targets.forEach(function(t) {
+        var el = document.getElementById(t.id);
+        var start = performance.now();
+        var dur = 1600;
+        function tick(now) {
+          var p = Math.min((now - start) / dur, 1);
+          var e = 1 - Math.pow(1 - p, 3);
+          el.textContent = (t.dec ? (e * t.val).toFixed(1) : Math.floor(e * t.val)) + t.sfx;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+    window.addEventListener('scroll', function() {
+      var el = document.getElementById('s1');
+      if (el && el.getBoundingClientRect().top < window.innerHeight * 0.8) runCounters();
+    }, {passive:true});
+    setTimeout(runCounters, 800);
 
-// ── DEMO TABS ──
-function showDemo(id, btn) {
-  document.querySelectorAll('.dpanel').forEach(function(p) { p.classList.remove('on'); });
-  document.querySelectorAll('.dtab').forEach(function(b) { b.classList.remove('on'); });
-  document.getElementById('dp-' + id).classList.add('on');
-  btn.classList.add('on');
-}
+    // ── APP TABS ──
+    function showApp(id, btn) {
+      document.querySelectorAll('.apanel').forEach(function(p) { p.classList.remove('on'); });
+      document.querySelectorAll('.atab').forEach(function(b) { b.classList.remove('on'); });
+      document.getElementById('ap-' + id).classList.add('on');
+      btn.classList.add('on');
+    }
 
-// ── REGRESSION ──
-function calcReg() {
-  var r1 = +document.getElementById('r1').value;
-  var r2 = +document.getElementById('r2').value;
-  var r3 = +document.getElementById('r3').value;
-  var r4 = +document.getElementById('r4').value;
-  document.getElementById('r1v').textContent = r1 + ' min';
-  document.getElementById('r2v').textContent = r2;
-  document.getElementById('r3v').textContent = r3;
-  document.getElementById('r4v').textContent = r4;
-  var sc = (0.35*r1 + 0.8*r2 + 1.2*r3 + 1.5*r4 + 5).toFixed(1);
-  document.getElementById('rout').textContent = sc;
-  var msg = sc < 25 ? 'Low engagement — diverse feed, lots of new creators shown' :
-            sc < 50 ? 'Moderate engagement — mix of familiar and new content' :
-            sc < 75 ? 'High engagement — very niche, interest-specific feed 🔥' :
-                      '🚀 Super user! Hyper-personalised feed — max ad revenue for Instagram!';
-  document.getElementById('rsub').textContent = msg;
-}
+    // ── DEMO TABS ──
+    function showDemo(id, btn) {
+      document.querySelectorAll('.dpanel').forEach(function(p) { p.classList.remove('on'); });
+      document.querySelectorAll('.dtab').forEach(function(b) { b.classList.remove('on'); });
+      document.getElementById('dp-' + id).classList.add('on');
+      btn.classList.add('on');
+    }
 
-// ── CLUSTERING ──
-function calcClust() {
-  var k1 = +document.getElementById('k1').value;
-  var k2 = +document.getElementById('k2').value;
-  var k3 = +document.getElementById('k3').value;
-  var k4 = +document.getElementById('k4').value;
-  document.getElementById('k1v').textContent = k1;
-  document.getElementById('k2v').textContent = k2;
-  document.getElementById('k3v').textContent = k3;
-  document.getElementById('k4v').textContent = k4;
-  // centroids [energy, acoustic, dance, mood]
-  var cents = [[3,8,4,5],[8,2,9,7],[7,3,8,8],[2,9,2,4],[9,4,3,4]];
-  var user = [k1,k2,k3,k4];
-  var best = 0, bd = Infinity;
-  cents.forEach(function(c, i) {
-    var d = Math.sqrt(c.reduce(function(s,v,j){return s + Math.pow(v-user[j],2);}, 0));
-    if (d < bd) { bd = d; best = i; }
-  });
-  for (var i = 0; i < 5; i++) {
-    document.getElementById('cl' + i).classList.toggle('match', i === best);
-  }
-}
+    // ── REGRESSION ──
+    function calcReg() {
+      var r1 = +document.getElementById('r1').value;
+      var r2 = +document.getElementById('r2').value;
+      var r3 = +document.getElementById('r3').value;
+      var r4 = +document.getElementById('r4').value;
+      document.getElementById('r1v').textContent = r1 + ' min';
+      document.getElementById('r2v').textContent = r2;
+      document.getElementById('r3v').textContent = r3;
+      document.getElementById('r4v').textContent = r4;
+      var sc = (0.35*r1 + 0.8*r2 + 1.2*r3 + 1.5*r4 + 5).toFixed(1);
+      document.getElementById('rout').textContent = sc;
+      var msg = sc < 25 ? 'Low engagement — diverse feed, lots of new creators shown' :
+                sc < 50 ? 'Moderate engagement — mix of familiar and new content' :
+                sc < 75 ? 'High engagement — very niche, interest-specific feed 🔥' :
+                          '🚀 Super user! Hyper-personalised feed — max ad revenue for Instagram!';
+      document.getElementById('rsub').textContent = msg;
+    }
 
-// ── PROBABILITY ──
-var tClicks = [3,6,2,5,4,5];
-var tImps   = [25,25,25,26,24,25];
-var tNames  = ['Action Scene','Lead Actor','Title Card','Ensemble Cast','Villain','Dramatic Moment'];
-function tClick(idx) {
-  tClicks[idx]++;
-  for (var i=0;i<6;i++) tImps[i]++;
-  var rates = tClicks.map(function(c,i){return c/tImps[i];});
-  var maxR = Math.max.apply(null, rates);
-  rates.forEach(function(r,i) {
-    var pct = Math.round(r*100);
-    document.getElementById('tb'+i).style.width = pct+'%';
-    document.getElementById('tp'+i).textContent = pct+'%' + (r===maxR?' 👑':'');
-    document.querySelector('.tgrid').children[i].classList.toggle('win', r===maxR);
-  });
-  document.getElementById('pinfo').innerHTML = '🎯 <strong>You clicked "'+tNames[idx]+'"</strong> — recorded as Click=1. After <strong>'+tImps[0]+' impressions</strong>, P̂ updates. Netflix serves the 👑 winning thumbnail to users with your viewing profile.';
-}
+    // ── CLUSTERING ──
+    function calcClust() {
+      var k1 = +document.getElementById('k1').value;
+      var k2 = +document.getElementById('k2').value;
+      var k3 = +document.getElementById('k3').value;
+      var k4 = +document.getElementById('k4').value;
+      document.getElementById('k1v').textContent = k1;
+      document.getElementById('k2v').textContent = k2;
+      document.getElementById('k3v').textContent = k3;
+      document.getElementById('k4v').textContent = k4;
+      // centroids [energy, acoustic, dance, mood]
+      var cents = [[3,8,4,5],[8,2,9,7],[7,3,8,8],[2,9,2,4],[9,4,3,4]];
+      var user = [k1,k2,k3,k4];
+      var best = 0, bd = Infinity;
+      cents.forEach(function(c, i) {
+        var d = Math.sqrt(c.reduce(function(s,v,j){return s + Math.pow(v-user[j],2);}, 0));
+        if (d < bd) { bd = d; best = i; }
+      });
+      for (var i = 0; i < 5; i++) {
+        document.getElementById('cl' + i).classList.toggle('match', i === best);
+      }
+    }
 
-// ── CHARTS ──
-Chart.defaults.font.family = 'Nunito';
-Chart.defaults.color = '#8a6a9a';
+    // ── PROBABILITY ──
+    var tClicks = [3,6,2,5,4,5];
+    var tImps   = [25,25,25,26,24,25];
+    var tNames  = ['Action Scene','Lead Actor','Title Card','Ensemble Cast','Villain','Dramatic Moment'];
+    function tClick(idx) {
+      tClicks[idx]++;
+      for (var i=0;i<6;i++) tImps[i]++;
+      var rates = tClicks.map(function(c,i){return c/tImps[i];});
+      var maxR = Math.max.apply(null, rates);
+      rates.forEach(function(r,i) {
+        var pct = Math.round(r*100);
+        document.getElementById('tb'+i).style.width = pct+'%';
+        document.getElementById('tp'+i).textContent = pct+'%' + (r===maxR?' 👑':'');
+        document.querySelector('.tgrid').children[i].classList.toggle('win', r===maxR);
+      });
+      document.getElementById('pinfo').innerHTML = '🎯 <strong>You clicked "'+tNames[idx]+'"</strong> — recorded as Click=1. After <strong>'+tImps[0]+' impressions</strong>, P̂ updates. Netflix serves the 👑 winning thumbnail to users with your viewing profile.';
+    }
 
-function initCharts() {
-  // Instagram regression scatter
-  var pts = [];
-  for (var i=0;i<40;i++) {
-    var x = Math.random()*10;
-    pts.push({x:x, y:0.7*x+1+(Math.random()-.5)*2.5});
-  }
-  new Chart(document.getElementById('chart-insta'), {
-    type:'scatter',
-    data:{datasets:[
-      {label:'User data points', data:pts, backgroundColor:'rgba(233,30,140,0.55)', pointRadius:5},
-      {label:'Regression line',  data:[{x:0,y:1},{x:10,y:8}], type:'line', borderColor:'#9b27b0', borderWidth:2.5, pointRadius:0, fill:false}
-    ]},
-    options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
-      scales:{
-        x:{title:{display:true,text:'Time on App (hrs/week)',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
-        y:{title:{display:true,text:'Posts Liked per Week',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}}
-      }}
-  });
+    // ── CHARTS ──
+    Chart.defaults.font.family = 'Nunito';
+    Chart.defaults.color = '#8a6a9a';
 
-  // YouTube time-series line
-  var hrs = ['6am','8am','10am','12pm','2pm','4pm','6pm','8pm','10pm'];
-  new Chart(document.getElementById('chart-yt'), {
-    type:'line',
-    data:{labels:hrs, datasets:[
-      {label:'Weekday', data:[5,8,7,10,8,12,20,42,30], borderColor:'#ff0000', backgroundColor:'rgba(255,0,0,0.07)', fill:true, tension:.4, pointRadius:4},
-      {label:'Weekend', data:[4,6,14,22,20,24,32,55,40], borderColor:'#e91e8c', backgroundColor:'rgba(233,30,140,0.07)', fill:true, tension:.4, pointRadius:4}
-    ]},
-    options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
-      scales:{
-        y:{title:{display:true,text:'Minutes watched',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
-        x:{grid:{color:'rgba(155,39,176,0.07)'}}
-      }}
-  });
+    function initCharts() {
+      // Instagram regression scatter
+      var pts = [];
+      for (var i=0;i<40;i++) {
+        var x = Math.random()*10;
+        pts.push({x:x, y:0.7*x+1+(Math.random()-.5)*2.5});
+      }
+      new Chart(document.getElementById('chart-insta'), {
+        type:'scatter',
+        data:{datasets:[
+          {label:'User data points', data:pts, backgroundColor:'rgba(233,30,140,0.55)', pointRadius:5},
+          {label:'Regression line',  data:[{x:0,y:1},{x:10,y:8}], type:'line', borderColor:'#9b27b0', borderWidth:2.5, pointRadius:0, fill:false}
+        ]},
+        options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
+          scales:{
+            x:{title:{display:true,text:'Time on App (hrs/week)',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
+            y:{title:{display:true,text:'Posts Liked per Week',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}}
+          }}
+      });
 
-  // Spotify cluster scatter
-  var cdefs = [
-    {l:'Indie/Alt',  c:'rgba(155,39,176,0.65)', cx:2, cy:8},
-    {l:'EDM/Pop',    c:'rgba(233,30,140,0.65)', cx:8, cy:3},
-    {l:'Hip-Hop/R&B',c:'rgba(59,130,246,0.65)', cx:8, cy:9},
-    {l:'Classical',  c:'rgba(0,200,150,0.65)',  cx:1, cy:2},
-    {l:'Rock/Metal', c:'rgba(255,184,0,0.65)',  cx:9, cy:1}
-  ];
-  var spotDatasets = cdefs.map(function(c) {
-    var pts2 = [];
-    for(var j=0;j<14;j++) pts2.push({x:c.cx+(Math.random()-.5)*3, y:c.cy+(Math.random()-.5)*3});
-    return {label:c.l, data:pts2, backgroundColor:c.c, pointRadius:7};
-  });
-  new Chart(document.getElementById('chart-spot'), {
-    type:'scatter',
-    data:{datasets:spotDatasets},
-    options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
-      scales:{
-        x:{title:{display:true,text:'Energy Level',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
-        y:{title:{display:true,text:'Acoustic-ness',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}}
-      }}
-  });
+      // YouTube time-series line
+      var hrs = ['6am','8am','10am','12pm','2pm','4pm','6pm','8pm','10pm'];
+      new Chart(document.getElementById('chart-yt'), {
+        type:'line',
+        data:{labels:hrs, datasets:[
+          {label:'Weekday', data:[5,8,7,10,8,12,20,42,30], borderColor:'#ff0000', backgroundColor:'rgba(255,0,0,0.07)', fill:true, tension:.4, pointRadius:4},
+          {label:'Weekend', data:[4,6,14,22,20,24,32,55,40], borderColor:'#e91e8c', backgroundColor:'rgba(233,30,140,0.07)', fill:true, tension:.4, pointRadius:4}
+        ]},
+        options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
+          scales:{
+            y:{title:{display:true,text:'Minutes watched',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
+            x:{grid:{color:'rgba(155,39,176,0.07)'}}
+          }}
+      });
 
-  // Netflix bar chart
-  var tl = ['Action Scene','Lead Actor','Title Card','Ensemble','Villain','Drama'];
-  var ct = [0.12, 0.24, 0.08, 0.19, 0.17, 0.20];
-  var maxCt = Math.max.apply(null, ct);
-  new Chart(document.getElementById('chart-nflx'), {
-    type:'bar',
-    data:{labels:tl, datasets:[{
-      label:'P(Click | User)',
-      data:ct,
-      backgroundColor: ct.map(function(v){return v===maxCt?'#e91e8c':'rgba(155,39,176,0.45)';}),
-      borderColor:     ct.map(function(v){return v===maxCt?'#e91e8c':'rgba(155,39,176,0.7)';}),
-      borderWidth:2, borderRadius:8
-    }]},
-    options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
-      scales:{
-        y:{title:{display:true,text:'Click Probability',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}, max:0.32},
-        x:{grid:{color:'rgba(155,39,176,0.07)'}}
-      }}
-  });
-}
+      // Spotify cluster scatter
+      var cdefs = [
+        {l:'Indie/Alt',  c:'rgba(155,39,176,0.65)', cx:2, cy:8},
+        {l:'EDM/Pop',    c:'rgba(233,30,140,0.65)', cx:8, cy:3},
+        {l:'Hip-Hop/R&B',c:'rgba(59,130,246,0.65)', cx:8, cy:9},
+        {l:'Classical',  c:'rgba(0,200,150,0.65)',  cx:1, cy:2},
+        {l:'Rock/Metal', c:'rgba(255,184,0,0.65)',  cx:9, cy:1}
+      ];
+      var spotDatasets = cdefs.map(function(c) {
+        var pts2 = [];
+        for(var j=0;j<14;j++) pts2.push({x:c.cx+(Math.random()-.5)*3, y:c.cy+(Math.random()-.5)*3});
+        return {label:c.l, data:pts2, backgroundColor:c.c, pointRadius:7};
+      });
+      new Chart(document.getElementById('chart-spot'), {
+        type:'scatter',
+        data:{datasets:spotDatasets},
+        options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
+          scales:{
+            x:{title:{display:true,text:'Energy Level',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}},
+            y:{title:{display:true,text:'Acoustic-ness',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}}
+          }}
+      });
 
-// ── QUIZ ──
-var Qs = [
-  {q:"Instagram assigns each post an 'interest score'. Which statistical method is this?",
-   hint:"💡 It predicts a number (engagement) from other numbers (past behaviour)",
-   opts:["Clustering","Regression","Classification","Probability Model"],ans:1,
-   exp:"📈 Regression! Instagram uses: Score = β₀ + β₁(likes) + β₂(watch time) + ε, continuously re-training on your latest behaviour."},
-  {q:"Spotify groups users by music taste WITHOUT any pre-set labels. What is this?",
-   hint:"💡 The method discovers hidden groups automatically — no labels needed",
-   opts:["Regression","Time-Series","Clustering","A/B Testing"],ans:2,
-   exp:"🫧 Clustering (K-Means)! It finds hidden groups automatically. Spotify finds your 'music twin' and builds Discover Weekly from their taste."},
-  {q:"Netflix models thumbnail clicks as Click=1, No Click=0. Which distribution?",
-   hint:"💡 Only two outcomes: success or failure",
-   opts:["Normal Distribution","Poisson Distribution","Bernoulli Distribution","Binomial Distribution"],ans:2,
-   exp:"🎲 Bernoulli Distribution! X ~ Bernoulli(p). Netflix estimates P(Click | User, Thumbnail) for every person-thumbnail pair in real time."},
-  {q:"YouTube tracks when you watch most to serve the right video at the right moment. This is:",
-   hint:"💡 Data collected at regular time intervals to find patterns",
-   opts:["Regression","Clustering","Time-Series Analysis","Classification"],ans:2,
-   exp:"📉 Time-Series Analysis! YouTube uses ARIMA to decompose viewing into trend, seasonality (exam season vs holidays) and cycles."},
-  {q:"YouTube auto-tags videos as 'cooking', 'gaming', 'finance' etc. This is called:",
-   hint:"💡 Sorting data into predefined categories with labels",
-   opts:["Regression","Clustering","Time-Series","Classification"],ans:3,
-   exp:"🏷️ Classification! It assigns predefined labels to data — letting YouTube tell advertisers exactly who's watching, making ads far more valuable."}
-];
-var cQ=0, cSc=0, cAns=false;
+      // Netflix bar chart
+      var tl = ['Action Scene','Lead Actor','Title Card','Ensemble','Villain','Drama'];
+      var ct = [0.12, 0.24, 0.08, 0.19, 0.17, 0.20];
+      var maxCt = Math.max.apply(null, ct);
+      new Chart(document.getElementById('chart-nflx'), {
+        type:'bar',
+        data:{labels:tl, datasets:[{
+          label:'P(Click | User)',
+          data:ct,
+          backgroundColor: ct.map(function(v){return v===maxCt?'#e91e8c':'rgba(155,39,176,0.45)';}),
+          borderColor:     ct.map(function(v){return v===maxCt?'#e91e8c':'rgba(155,39,176,0.7)';}),
+          borderWidth:2, borderRadius:8
+        }]},
+        options:{responsive:true, plugins:{legend:{labels:{font:{weight:'700'}}}},
+          scales:{
+            y:{title:{display:true,text:'Click Probability',color:'#8a6a9a'}, grid:{color:'rgba(155,39,176,0.07)'}, max:0.32},
+            x:{grid:{color:'rgba(155,39,176,0.07)'}}
+          }}
+      });
+    }
 
-function startQuiz() {
-  cQ=0; cSc=0; cAns=false;
-  document.getElementById('scorescreen').classList.remove('show');
-  document.getElementById('qmain').style.display='block';
-  renderQ();
-}
-function renderQ() {
-  cAns = false;
-  var q = Qs[cQ];
-  var bar = Qs.map(function(_,i){return '<div class="qb '+(i<cQ?'done':i===cQ?'cur':'')+'"></div>';}).join('');
-  document.getElementById('qbar').innerHTML = bar;
-  var opts = q.opts.map(function(o,i){return '<button class="qopt" onclick="doAns('+i+')">'+o+'</button>';}).join('');
-  document.getElementById('qmain').innerHTML =
-    '<div class="qcount">QUESTION '+(cQ+1)+' OF '+Qs.length+'</div>'+
-    '<div class="qq">'+q.q+'</div>'+
-    '<div class="qhint">'+q.hint+'</div>'+
-    '<div class="qopts">'+opts+'</div>'+
-    '<div class="qfb" id="qfb"></div>'+
-    '<button class="qnxt" id="qnxt" onclick="nextQ()">'+(cQ<Qs.length-1?'Next Question →':'See My Score 🎉')+'</button>';
-}
-function doAns(idx) {
-  if (cAns) return;
-  cAns = true;
-  var q = Qs[cQ];
-  var opts = document.querySelectorAll('.qopt');
-  opts.forEach(function(o){o.disabled=true;});
-  opts[idx].classList.add(idx===q.ans?'ok':'bad');
-  if (idx!==q.ans) opts[q.ans].classList.add('ok');
-  if (idx===q.ans) cSc++;
-  var fb = document.getElementById('qfb');
-  fb.textContent = q.exp;
-  fb.className = 'qfb show ' + (idx===q.ans?'ok':'bad');
-  document.getElementById('qnxt').classList.add('show');
-}
-function nextQ() {
-  cQ++;
-  if (cQ >= Qs.length) {
-    document.getElementById('qmain').style.display='none';
-    var emojis=['😅','🤔','😊','🎉','🏆'];
-    var msgs=['Keep revising — you got this!','Good try! Review the case studies.','Solid understanding! Well done.','Great job — you really nailed it! 🎉','Full marks! Stats genius! 🏆'];
-    document.getElementById('scorebig').textContent = cSc+'/'+Qs.length;
-    document.getElementById('scoreemi').textContent = emojis[cSc]||'🎊';
-    document.getElementById('scoremsg').textContent = msgs[cSc]||'Well done!';
-    document.getElementById('scorescreen').classList.add('show');
-    document.getElementById('qbar').innerHTML = Qs.map(function(){return '<div class="qb done"></div>';}).join('');
-  } else {
-    renderQ();
-  }
-}
+    // ── QUIZ ──
+    var Qs = [
+      {q:"Instagram assigns each post an 'interest score'. Which statistical method is this?",
+       hint:"💡 It predicts a number (engagement) from other numbers (past behaviour)",
+       opts:["Clustering","Regression","Classification","Probability Model"],ans:1,
+       exp:"📈 Regression! Instagram uses: Score = β₀ + β₁(likes) + β₂(watch time) + ε, continuously re-training on your latest behaviour."},
+      {q:"Spotify groups users by music taste WITHOUT any pre-set labels. What is this?",
+       hint:"💡 The method discovers hidden groups automatically — no labels needed",
+       opts:["Regression","Time-Series","Clustering","A/B Testing"],ans:2,
+       exp:"🫧 Clustering (K-Means)! It finds hidden groups automatically. Spotify finds your 'music twin' and builds Discover Weekly from their taste."},
+      {q:"Netflix models thumbnail clicks as Click=1, No Click=0. Which distribution?",
+       hint:"💡 Only two outcomes: success or failure",
+       opts:["Normal Distribution","Poisson Distribution","Bernoulli Distribution","Binomial Distribution"],ans:2,
+       exp:"🎲 Bernoulli Distribution! X ~ Bernoulli(p). Netflix estimates P(Click | User, Thumbnail) for every person-thumbnail pair in real time."},
+      {q:"YouTube tracks when you watch most to serve the right video at the right moment. This is:",
+       hint:"💡 Data collected at regular time intervals to find patterns",
+       opts:["Regression","Clustering","Time-Series Analysis","Classification"],ans:2,
+       exp:"📉 Time-Series Analysis! YouTube uses ARIMA to decompose viewing into trend, seasonality (exam season vs holidays) and cycles."},
+      {q:"YouTube auto-tags videos as 'cooking', 'gaming', 'finance' etc. This is called:",
+       hint:"💡 Sorting data into predefined categories with labels",
+       opts:["Regression","Clustering","Time-Series","Classification"],ans:3,
+       exp:"🏷️ Classification! It assigns predefined labels to data — letting YouTube tell advertisers exactly who's watching, making ads far more valuable."}
+    ];
+    var cQ=0, cSc=0, cAns=false;
 
-// ── INIT ──
-window.addEventListener('load', function() {
-  initCharts();
-  startQuiz();
-  calcReg();
-  calcClust();
-});
-</script>
+    function startQuiz() {
+      cQ=0; cSc=0; cAns=false;
+      document.getElementById('scorescreen').classList.remove('show');
+      document.getElementById('qmain').style.display='block';
+      renderQ();
+    }
+    function renderQ() {
+      cAns = false;
+      var q = Qs[cQ];
+      var bar = Qs.map(function(_,i){return '<div class="qb '+(i<cQ?'done':i===cQ?'cur':'')+'"></div>';}).join('');
+      document.getElementById('qbar').innerHTML = bar;
+      var opts = q.opts.map(function(o,i){return '<button class="qopt" onclick="doAns('+i+')">'+o+'</button>';}).join('');
+      document.getElementById('qmain').innerHTML =
+        '<div class="qcount">QUESTION '+(cQ+1)+' OF '+Qs.length+'</div>'+
+        '<div class="qq">'+q.q+'</div>'+
+        '<div class="qhint">'+q.hint+'</div>'+
+        '<div class="qopts">'+opts+'</div>'+
+        '<div class="qfb" id="qfb"></div>'+
+        '<button class="qnxt" id="qnxt" onclick="nextQ()">'+(cQ<Qs.length-1?'Next Question →':'See My Score 🎉')+'</button>';
+    }
+    function doAns(idx) {
+      if (cAns) return;
+      cAns = true;
+      var q = Qs[cQ];
+      var opts = document.querySelectorAll('.qopt');
+      opts.forEach(function(o){o.disabled=true;});
+      opts[idx].classList.add(idx===q.ans?'ok':'bad');
+      if (idx!==q.ans) opts[q.ans].classList.add('ok');
+      if (idx===q.ans) cSc++;
+      var fb = document.getElementById('qfb');
+      fb.textContent = q.exp;
+      fb.className = 'qfb show ' + (idx===q.ans?'ok':'bad');
+      document.getElementById('qnxt').classList.add('show');
+    }
+    function nextQ() {
+      cQ++;
+      if (cQ >= Qs.length) {
+        document.getElementById('qmain').style.display='none';
+        var emojis=['😅','🤔','😊','🎉','🏆'];
+        var msgs=['Keep revising — you got this!','Good try! Review the case studies.','Solid understanding! Well done.','Great job — you really nailed it! 🎉','Full marks! Stats genius! 🏆'];
+        document.getElementById('scorebig').textContent = cSc+'/'+Qs.length;
+        document.getElementById('scoreemi').textContent = emojis[cSc]||'🎊';
+        document.getElementById('scoremsg').textContent = msgs[cSc]||'Well done!';
+        document.getElementById('scorescreen').classList.add('show');
+        document.getElementById('qbar').innerHTML = Qs.map(function(){return '<div class="qb done"></div>';}).join('');
+      } else {
+        renderQ();
+      }
+    }
+
+    // ── INIT ──
+    window.addEventListener('load', function() {
+      initCharts();
+      startQuiz();
+      calcReg();
+      calcClust();
+    });
+  </script>
 </body>
 </html>
